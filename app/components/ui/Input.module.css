@@ -1,0 +1,46 @@
+.inputContainer {
+  background-color: #2D2F44;
+  border-radius: 0.4rem;
+  padding: 0.6rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 56px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: text;
+}
+
+.inputContainer:focus-within {
+  border-color: #55587A;
+  box-shadow: 0 0 0 2px rgba(85, 88, 122, 0.2);
+}
+
+.label {
+  font-size: 0.55rem;
+  color: #8C8EA6;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2rem;
+  font-weight: 700;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 0.95rem;
+  font-weight: 500;
+  outline: none;
+  padding: 0;
+  width: 100%;
+  font-family: inherit;
+}
+
+.input::placeholder {
+  color: #8C8EA6;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
