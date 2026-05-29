@@ -13,7 +13,7 @@ export default function Home() {
         src={Map}
         alt="Background Map"
         fill
-        className="object-cover object-center -z-10 blur-xs"
+        className="blur-xs"
         priority
       />
       
