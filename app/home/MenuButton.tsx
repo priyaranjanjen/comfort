@@ -53,11 +53,7 @@ const MenuButton = () => {
         <div className="relative" ref={containerRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`flex items-center justify-center cursor-pointer border rounded-full shadow-md p-2 hover:scale-95 hover:shadow-lg transition-all duration-300 ${
-                    isOpen 
-                        ? 'bg-gray-100 border-gray-300 rotate-90 scale-95' 
-                        : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
-                }`}
+                className={`flex items-center justify-center cursor-pointer bg-white border border-gray-200 rounded-full shadow-md p-2 hover:scale-90 hover:shadow-2xl transition-all duration-300 ${!isOpen ? "text-gray-600" : "text-black"}`}
                 aria-label="Menu"
             >
                 <IoMenu size={22} />

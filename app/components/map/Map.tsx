@@ -1,6 +1,15 @@
 "use client";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap } from 'react-leaflet'
 import L from 'leaflet'
+import { renderToStaticMarkup } from 'react-dom/server';
+import { TiLocation } from 'react-icons/ti';
+
+const userLocationIcon = L.divIcon({
+  html: renderToStaticMarkup(<TiLocation size={40} className='text-gray-800 animate-bounce' />),
+  className: '',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
 
 // Fix broken default marker icons (common Leaflet + Vite bug)
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
@@ -42,30 +51,32 @@ interface Listing {
 }
 
 import { memo, useEffect, useState } from 'react';
+import { MdOutlineMyLocation } from 'react-icons/md';
 
 // tiles data to be fetched from backend db
 const listings: Listing[] = [
-  { id: 1, lat: 26.144, lng: 91.736, price: 8500,  title: '2BHK in Paltan Bazaar' },
+  { id: 1, lat: 26.144, lng: 91.736, price: 8500, title: '2BHK in Paltan Bazaar' },
   { id: 2, lat: 26.148, lng: 91.742, price: 12000, title: '3BHK in Christianbasti' },
-  { id: 3, lat: 26.140, lng: 91.730, price: 6200,  title: '1BHK in Uzanbazar' },
+  { id: 3, lat: 26.140, lng: 91.730, price: 6200, title: '1BHK in Uzanbazar' },
 ]
 
 function LocationMarker() {
   const map = useMap();
   const [position, setPosition] = useState<[number, number] | null>(null);
 
-  useEffect(() => {
+  const locateUser = () => {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const coords: [number, number] = [pos.coords.latitude, pos.coords.longitude];
         setPosition(coords);
-        // Fly to user location smoothly with zoom level 14
+        // Fly to user location smoothly
         map.flyTo(coords, 17, {
-          duration: 1.5
+          duration: 2
         });
       },
       (err) => {
         console.warn(`Geolocation ERROR(${err.code}): ${err.message}`);
+        alert("Could not get your location. Please check your permissions.");
       },
       {
         enableHighAccuracy: true,
@@ -73,14 +84,33 @@ function LocationMarker() {
         maximumAge: 0,
       }
     );
+  };
+
+  useEffect(() => {
+    locateUser();
   }, [map]);
 
-  return position === null ? null : (
-    <Marker position={position}>
-      <Popup>
-        <strong>You are here</strong>
-      </Popup>
-    </Marker>
+  return (
+    <>
+      <div className='absolute bottom-10 right-4 p-2 flex items-center justify-center shadow-2xl border border-gray-300 z-1000 bg-gray-600 text-white rounded-lg cursor-pointer  transition-all'>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            locateUser();
+          }}
+          title="Find my location"
+        >
+          <MdOutlineMyLocation size={18} className='cursor-pointer'/>
+        </button>
+      </div>
+      {position === null ? null : (
+        <Marker position={position} icon={userLocationIcon}>
+          <Popup>
+            <strong>You are here</strong>
+          </Popup>
+        </Marker>
+      )}
+    </>
   );
 }
 
@@ -94,8 +124,8 @@ const RentalMap = memo(function RentalMap() {
       style={{ height: '100vh', width: '100%' }}
     >
       <LocationMarker />
-      <ZoomControl position="bottomright" />
-      
+      {/* <ZoomControl position="bottomright" /> */}
+
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -5,7 +5,7 @@ interface SidebarProps {
 const Sidebar = ({ isOpen }: SidebarProps) => {
     return (
         <div
-            className={`absolute top-0 left-0 h-full w-[320px] bg-white/10 backdrop-blur-sm border-r border-gray-200 overflow-y-auto pt-20 px-6 shadow-[4px_0_24px_rgba(0,0,0,0.05)] z-500 flex flex-col transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
+            className={`absolute top-0 left-0 h-full w-[320px] bg-white/10 backdrop-blur-lg border-r border-gray-200 overflow-y-auto pt-20 px-6 shadow-[4px_0_24px_rgba(0,0,0,0.05)] z-500 flex flex-col transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
                 }`}
         >
             <h2 className="text-xl font-bold text-gray-800 mb-6">Filters</h2>

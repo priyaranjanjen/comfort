@@ -9,6 +9,7 @@ import Image from "next/image";
 import profile from '@/public/profile.png'
 import SearchBar from "../components/ui/SearchBar";
 import MenuButton from "./MenuButton";
+import { Button } from "../components/ui/Button";
 const Map = dynamic(() => import("../components/map/Map"), { ssr: false });
 
 
@@ -50,6 +51,7 @@ const Page = () => {
 
                 {/* Profile Button */}
                 <div className="pointer-events-auto flex items-center gap-3">
+                    <div className="text-[0.9rem] hover:bg-gray-100 hover:scale-105 transition-all ease-in hover:shadow-lg cursor-pointer p-2 rounded-lg font-semibold mr-2">List your own property</div>
                     <div className="relative rounded-full h-10 w-10 shadow-md">
                         <Image
                             src={profile}
